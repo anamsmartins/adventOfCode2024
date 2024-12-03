@@ -3,7 +3,7 @@ import { readInput } from "../../utils.js";
 var input = readInput();
 
 var multiplications = input.match(/mul\(\d{1,3},\d{1,3}\)|don\'t\(\)|do\(\)/g);
-console.log(multiplications);
+
 var total = 0;
 var doCondition = true;
 
