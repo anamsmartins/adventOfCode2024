@@ -1,4 +1,4 @@
-import { readInput } from "../../utils.js";
+import { readInput, getInputMatrix } from "../../utils.js";
 
 var input = readInput();
 
@@ -9,17 +9,7 @@ var rows = input.split("\n");
 var nRows = rows.length;
 var nColumns = rows[0].length;
 
-var inputMatrix = Array(nRows)
-  .fill()
-  .map(() => Array(nColumns).fill(0));
-
-rows.forEach((row, index) => {
-  var characters = row.split("");
-  characters.forEach((char, char_index) => {
-    // Get input matrix
-    inputMatrix[index][char_index] = char;
-  });
-});
+var inputMatrix = getInputMatrix(input);
 
 // Get diagonals
 var nDiagonalsPerSide = nRows + nColumns - 1;
