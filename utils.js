@@ -20,3 +20,55 @@ export function swapArrayElements(array, index1, index2) {
   array[index1] = array[index2];
   array[index2] = temp;
 }
+
+export function getInputMatrix(input) {
+  var rows = input.split("\n");
+  var nRows = rows.length;
+  var nColumns = rows[0].length;
+
+  var inputMatrix = Array(nRows)
+    .fill()
+    .map(() => Array(nColumns).fill(0));
+
+  rows.forEach((row, index) => {
+    var characters = row.split("");
+    characters.forEach((char, char_index) => {
+      // Get input matrix
+      inputMatrix[index][char_index] = char;
+    });
+  });
+
+  return inputMatrix;
+}
+
+export function findPositionInMatrix(matrix, element) {
+  var nRows = matrix.length;
+  var nColumns = matrix[0].length;
+  var position = null;
+
+  for (var i = 0; i < nRows; i++) {
+    for (var j = 0; j < nColumns; j++) {
+      if (matrix[i][j] == element) {
+        position = [i, j];
+      }
+    }
+  }
+
+  return position;
+}
+
+export function findAllPositionsInMatrix(matrix, element) {
+  var nRows = matrix.length;
+  var nColumns = matrix[0].length;
+  var positions = [];
+
+  for (var i = 0; i < nRows; i++) {
+    for (var j = 0; j < nColumns; j++) {
+      if (matrix[i][j] == element) {
+        positions.push([i, j]);
+      }
+    }
+  }
+
+  return positions;
+}
