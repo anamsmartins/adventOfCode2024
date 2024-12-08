@@ -15,6 +15,14 @@ export function occurInArray(array, value) {
   return total;
 }
 
+export function occurInMatrix(matrix, value) {
+  var total = 0;
+  matrix.forEach((array) => {
+    total += occurInArray(array, value);
+  });
+  return total;
+}
+
 export function swapArrayElements(array, index1, index2) {
   let temp = array[index1];
   array[index1] = array[index2];
@@ -71,4 +79,10 @@ export function findAllPositionsInMatrix(matrix, element) {
   }
 
   return positions;
+}
+
+export function generateMatrix(rows, columns, fillElement = ".") {
+  return Array(rows)
+    .fill()
+    .map(() => Array(columns).fill(fillElement));
 }
