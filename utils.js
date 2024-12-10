@@ -29,7 +29,7 @@ export function swapArrayElements(array, index1, index2) {
   array[index2] = temp;
 }
 
-export function getInputMatrix(input) {
+export function getInputMatrix(input, isNumeric = false) {
   var rows = input.split("\n");
   var nRows = rows.length;
   var nColumns = rows[0].length;
@@ -42,6 +42,9 @@ export function getInputMatrix(input) {
     var characters = row.split("");
     characters.forEach((char, char_index) => {
       // Get input matrix
+      if (isNumeric) {
+        char = parseInt(char);
+      }
       inputMatrix[index][char_index] = char;
     });
   });
