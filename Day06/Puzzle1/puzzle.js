@@ -1,9 +1,11 @@
 import {
   readInput,
+  occurInArray,
   getInputMatrix,
+  reachedMatrixBorder,
   findPositionInMatrix,
   findAllPositionsInMatrix,
-  occurInArray,
+  moveDirectionInMatrix,
 } from "../../utils.js";
 
 var input = readInput();
@@ -20,22 +22,10 @@ if (obstacles.length == 0) {
   console.log("No obstucle found");
 }
 
-var nRows = inputMatrix.length;
-var nColumns = inputMatrix[0].length;
 var currentDirection = 0;
 
 var positionsVisited = 1;
 var guardLeft = false;
-
-function reachedBorder(position) {
-  var x = position[0];
-  var y = position[1];
-  if (x == 0 || x == nRows - 1 || y == 0 || y == nColumns - 1) {
-    return true;
-  }
-
-  return false;
-}
 
 function reachedObstacle(position, direction, obstacles) {
   var x = position[0];
@@ -69,30 +59,17 @@ function reachedObstacle(position, direction, obstacles) {
   return reachedObstacle;
 }
 
-function move(position, direction, obstacles, inputMatrix) {
+function move(position, direction, obstacles, matrix) {
   console.log("Position: " + position + "; Direction: " + direction);
   while (
     !(
-      reachedObstacle(position, direction, obstacles) || reachedBorder(position)
+      reachedObstacle(position, direction, obstacles) ||
+      reachedMatrixBorder(position, matrix.length, matrix[0].length)
     )
   ) {
-    inputMatrix[position[0]][position[1]] = "X";
-    switch (direction) {
-      case 0: // up
-        position[0] -= 1;
-        break;
-      case 1: //right
-        position[1] += 1;
-        break;
-      case 2: // down
-        position[0] += 1;
-        break;
-      default: //left
-        position[1] -= 1;
-        break;
-    }
+    matrix[position[0]][position[1]] = "X";
+    moveDirectionInMatrix(position, direction);
   }
-  console.log(inputMatrix);
 }
 
 while (!guardLeft) {
@@ -106,7 +83,13 @@ while (!guardLeft) {
     }
   }
 
-  if (reachedBorder(currentPosition)) {
+  if (
+    reachedMatrixBorder(
+      currentPosition,
+      inputMatrix.length,
+      inputMatrix[0].length
+    )
+  ) {
     guardLeft = true;
   }
 }

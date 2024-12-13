@@ -2,6 +2,7 @@ import {
   readInput,
   getInputMatrix,
   findAllPositionsInMatrix,
+  isPossibleDirectionInMatrix,
 } from "../../utils.js";
 
 var input = readInput();
@@ -16,26 +17,6 @@ trailheads.forEach((trailhead) => {
 });
 
 var possibleDirections = ["left", "right", "up", "down"];
-
-function isPossibleDirection(position, direction, topographicMap) {
-  var x = position[0];
-  var y = position[1];
-
-  var nRows = topographicMap.length;
-  var nColumns = topographicMap[0].length;
-
-  // Check if next position is out of bounds according to the direction
-  switch (direction) {
-    case "left":
-      return x - 1 > -1;
-    case "right":
-      return x + 1 < nRows;
-    case "up":
-      return y - 1 > -1;
-    case "down":
-      return y + 1 < nColumns;
-  }
-}
 
 function moveDirection(position, direction) {
   var x = position[0];
@@ -62,7 +43,9 @@ function moveRecursively(
   trailheadScores,
   topographicMap
 ) {
-  if (!isPossibleDirection(currentPosition, direction, topographicMap)) {
+  if (
+    !isPossibleDirectionInMatrix(currentPosition, direction, topographicMap)
+  ) {
     return;
   }
 

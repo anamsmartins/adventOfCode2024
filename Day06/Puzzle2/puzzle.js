@@ -1,7 +1,9 @@
 import {
   readInput,
   getInputMatrix,
+  reachedMatrixBorder,
   findPositionInMatrix,
+  moveDirectionInMatrix,
   findAllPositionsInMatrix,
 } from "../../utils.js";
 
@@ -25,17 +27,6 @@ if (obstacles.length == 0) {
 var nRows = inputMatrix.length;
 var nColumns = inputMatrix[0].length;
 var currentDirection = 0;
-
-function reachedBorder(position) {
-  var x = position[0];
-  var y = position[1];
-  // console.log("POSITION : " + position);
-  if (x == 0 || x == nRows - 1 || y == 0 || y == nColumns - 1) {
-    return true;
-  }
-
-  return false;
-}
 
 function reachedObstacle(position, direction, obstacles) {
   var x = position[0];
@@ -62,7 +53,6 @@ function reachedObstacle(position, direction, obstacles) {
   obstacles.forEach((obstacle) => {
     if (nextX == obstacle[0] && nextY == obstacle[1]) {
       reachedObstacle = true;
-      // console.log("OH NO, reached obstacle!");
     }
   });
 
@@ -72,23 +62,11 @@ function reachedObstacle(position, direction, obstacles) {
 function move(position, direction, obstacles) {
   while (
     !(
-      reachedObstacle(position, direction, obstacles) || reachedBorder(position)
+      reachedObstacle(position, direction, obstacles) ||
+      reachedMatrixBorder(position, nRows, nColumns)
     )
   ) {
-    switch (direction) {
-      case 0: // up
-        position[0] -= 1;
-        break;
-      case 1: //right
-        position[1] += 1;
-        break;
-      case 2: // down
-        position[0] += 1;
-        break;
-      default: //left
-        position[1] -= 1;
-        break;
-    }
+    moveDirectionInMatrix(position, direction);
   }
 }
 
@@ -188,13 +166,11 @@ for (var i = 0; i < nRows; i++) {
         }
       }
 
-      if (reachedBorder(currentPosition)) {
+      if (reachedMatrixBorder(currentPosition, nRows, nColumns)) {
         console.log("I REACHED BORDER");
         guardLeft = true;
       }
     }
-
-    console.log("LEFT WHILE");
 
     inputMatrix[i][j] = ".";
     obstacles.pop();

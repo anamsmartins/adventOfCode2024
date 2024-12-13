@@ -1,29 +1,8 @@
-import { readInput } from "../../utils.js";
+import { readInput, generateCombinations } from "../../utils.js";
 
 var input = readInput();
 
 var equations = input.split("\n");
-
-function generateCombinations(operators, length) {
-  const combinations = [];
-
-  // Recursive function
-  function backtrack(current, depth) {
-    // Base case - string reaches the required length
-    if (depth === length) {
-      combinations.push(current);
-      return;
-    }
-
-    // Recursive step - Append each operator and recurse
-    for (let op of operators) {
-      backtrack(current + op, depth + 1);
-    }
-  }
-
-  backtrack("", 0);
-  return combinations;
-}
 
 var totalCalibration = 0;
 var possibleOperators = ["+", "*", "||"];

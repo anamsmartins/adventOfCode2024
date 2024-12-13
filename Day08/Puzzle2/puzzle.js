@@ -3,38 +3,15 @@ import {
   getInputMatrix,
   generateMatrix,
   occurInMatrix,
+  getElementsPositionsMapFromMatrix,
 } from "../../utils.js";
 
 var input = readInput();
 
 var inputMatrix = getInputMatrix(input);
 
-function getFrequencyPositions(matrix) {
-  var frequencyPositions = new Map();
-
-  for (var i = 0; i < matrix.length; i++) {
-    for (var j = 0; j < matrix[0].length; j++) {
-      var frequency = matrix[i][j];
-
-      if (frequency == ".") {
-        continue;
-      }
-
-      if (frequencyPositions.has(frequency)) {
-        frequencyPositions.get(frequency).push([i, j]);
-      } else {
-        frequencyPositions.set(frequency, [[i, j]]);
-      }
-    }
-  }
-
-  return frequencyPositions;
-}
-
 // Generate frequency positions Map
-var frequencyPositions = getFrequencyPositions(inputMatrix);
-
-console.log(frequencyPositions);
+var frequencyPositions = getElementsPositionsMapFromMatrix(inputMatrix, ["."]);
 
 var nRows = inputMatrix.length;
 var nColumns = inputMatrix[0].length;
